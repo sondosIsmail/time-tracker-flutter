@@ -1,6 +1,6 @@
 # Time Tracker
 
-Time Tracker Application By Using Flutter Framework.
+Time Tracker Application By Using Flutter2 Framework.
 
 ## Screenshots:
 
