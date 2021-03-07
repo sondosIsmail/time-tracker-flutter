@@ -8,10 +8,9 @@ import 'package:time_tracker_flutter/services/auth.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({
-    Key? key,
     required this.auth,
     required this.onSignIn,
-  }) : super(key: key);
+  });
 
   final AuthBase auth;
   final Function(User?) onSignIn;
