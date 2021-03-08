@@ -6,7 +6,7 @@ import 'package:time_tracker_flutter/app/home_page.dart';
 import 'package:time_tracker_flutter/app/sign_in/sign_in_page.dart';
 import 'package:time_tracker_flutter/services/auth.dart';
 
-class LandingPage extends StatefulWidget {
+class LandingPage extends StatelessWidget {
   const LandingPage({
     required this.auth,
   });
@@ -14,37 +14,29 @@ class LandingPage extends StatefulWidget {
   final AuthBase auth;
 
   @override
-  _LandingPageState createState() => _LandingPageState();
-}
-
-class _LandingPageState extends State<LandingPage> {
-  User? _user;
-
-  @override
-  void initState() {
-    final User? currentUser = widget.auth.currentUser();
-    _updateUser(currentUser);
-    super.initState();
-  }
-
-  void _updateUser(User? user) {
-    setState(() {
-      _user = user;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    if (_user == null) {
-      return SignInPage(
-        auth: widget.auth,
-        onSignIn: _updateUser,
-      );
-    } else {
-      return HomePage(
-        auth: widget.auth,
-        onSignOut: () => _updateUser(null),
-      );
-    }
+    return StreamBuilder<User?>(
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          User? user = snapshot.data;
+          if (user == null) {
+            return SignInPage(
+              auth: auth,
+            );
+          } else {
+            return HomePage(
+              auth: auth,
+            );
+          }
+        } else {
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
+      stream: auth.authStateChanges,
+    );
   }
 }
