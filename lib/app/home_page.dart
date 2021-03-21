@@ -23,7 +23,6 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 20.0),
             child: TextButton(
               child: Text(
                 'Logout',
@@ -34,6 +33,7 @@ class HomePage extends StatelessWidget {
               ),
               onPressed: _signOut,
             ),
+            padding: const EdgeInsets.only(right: 20.0),
           ),
         ],
         elevation: 2.0,
